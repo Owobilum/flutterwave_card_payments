@@ -18,6 +18,3 @@ const paymentSchema = new mongoose.Schema(
 );
 
 module.exports = mongoose.model("Payment", paymentSchema);
-
-// you'll have a payments/create endpoint. Save the payment to payment collection, then use the response to add the payment to that customer's
-// payment array
