@@ -3,6 +3,7 @@ const {
   isExistingCustomer,
   findCustomerById,
   getAllCustomers,
+  getCustomerAndPayments
 } = require("../models/customer.model");
 const { getPagination } = require("../services/utils");
 
@@ -65,4 +66,15 @@ async function httpGetAllCustomers(req, res) {
   return res.status(200).json({ message: "success", data: { customers } });
 }
 
-module.exports = { httpCreateCustomer, httpGetCustomer, httpGetAllCustomers };
+async function httpGetCustomerAndPayments(req, res){
+  const {customerId} = req.params
+  const customer = await getCustomerAndPayments(customerId)
+  if (!customer) {
+    return res.status(502).json({ error: "could not fetch data" });
+  }
+
+  return res.status(200).json({ message: "success", data: { customer } });
+
+}
+
+module.exports = { httpCreateCustomer, httpGetCustomer, httpGetAllCustomers,httpGetCustomerAndPayments };

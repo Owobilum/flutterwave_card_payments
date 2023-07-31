@@ -1,4 +1,7 @@
+const mongoose = require("mongoose")
+
 const customers = require("./customer.mongo");
+
 
 async function addCustomer(customer) {
   try {
@@ -48,10 +51,31 @@ async function getAllCustomers(skip, limit) {
   }
 }
 
+async function  getCustomerAndPayments(customerId){
+  try{
+    const customerAggregate = await customers.aggregate([
+      { $match: { _id: new mongoose.Types.ObjectId(customerId) } },
+      {
+        $lookup: {
+          from: "payments", 
+          localField: "_id",
+          foreignField: "customer",
+          as: "payments",
+        },
+      },
+    ])
+    return customerAggregate
+  }catch (e){
+    console.log(e)
+    return false;
+  }
+}
+
 module.exports = {
   addCustomer,
   isExistingCustomer,
   findCustomer,
   findCustomerById,
   getAllCustomers,
+  getCustomerAndPayments
 };

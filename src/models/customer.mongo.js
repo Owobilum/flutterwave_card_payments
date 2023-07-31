@@ -20,7 +20,6 @@ const customerSchema = new mongoose.Schema(
       required: true,
       unique: true,
     },
-    payments: [{ type: mongoose.Types.ObjectId, ref: "Payment" }],
   },
   { timestamps: true }
 );

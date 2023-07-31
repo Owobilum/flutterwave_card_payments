@@ -15,9 +15,9 @@ const config = {
 async function initiateCardPayment(payment) {
   try {
     const storedPayment = await payments.create(payment);
-    const customer = await findCustomer({ email: payment.email });
-    customer.payments.push(storedPayment);
-    await customer.save();
+    // const customer = await findCustomer({ email: payment.email });
+    // customer.payments.push(storedPayment);
+    // await customer.save();
 
     return storedPayment;
   } catch (e) {
